@@ -51,8 +51,9 @@ int main() {
     hexagon_sim_show_timer(stdout);
 
     /********
-    1584640 cycles for 462 classifications, 0.69 microsecond for each classification
+    1584640 cycles for 462 classifications, 6.86 microsecond for each classification
     use optimization for conditional statement: 1287866 cycles, ~18.7% improvement
+    0.006885s for 462 classifications on NDK, 14.90 micros for each classification
     ********/
 
     // ofstream out(outfile.c_str());
