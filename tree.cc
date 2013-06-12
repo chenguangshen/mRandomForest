@@ -17,6 +17,7 @@
 #include <deque>
 #include <set>
 #include <map>
+ #include <hexagon_types.h>
 // binary tree implcit in array
 // rows in sorted_inum matrix are arranged in a similar style
 
@@ -462,6 +463,7 @@ int Tree::predict(const InstanceSet& set, int instance_no, int *terminal) const 
   bool result = false;
   int cur_node = 0;
   int label = 0;
+  int p = -1;
   while (!result) {
     const tree_node* n = &nodes_[cur_node];
     assert(n->status == TERMINAL || n->status == SPLIT);
@@ -469,11 +471,18 @@ int Tree::predict(const InstanceSet& set, int instance_no, int *terminal) const 
       result = true;
       label = n->label;
     } else {
-      if (set.get_attribute(instance_no, n->attr) < n->split_point) {
-        cur_node = n->left;
-      } else {
-        cur_node = n->right;
-      }
+
+      // HEXAGON_Pred p = (set.get_attribute(instance_no, n->attr) < n->split_point);
+      // cur_node = Q6_R_mux_pRR(p, n->left, n->right);
+      
+      // // optimize here
+      p = (set.get_attribute(instance_no, n->attr) < n->split_point);
+      cur_node = (p ? n->left : n->right);
+      // if (set.get_attribute(instance_no, n->attr) < n->split_point) {
+      //   cur_node = n->left;
+      // } else {
+      //   cur_node = n->right;
+      // }
     }
   }
   if (terminal != NULL) {

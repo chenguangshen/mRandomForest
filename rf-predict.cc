@@ -52,6 +52,7 @@ int main() {
 
     /********
     1584640 cycles for 462 classifications, 0.69 microsecond for each classification
+    use optimization for conditional statement: 1287866 cycles, ~18.7% improvement
     ********/
 
     // ofstream out(outfile.c_str());

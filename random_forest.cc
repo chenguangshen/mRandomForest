@@ -9,6 +9,8 @@
 #include <fstream>
 #include <algorithm>
 #include <assert.h>
+#include <hexagon_types.h>
+
 namespace librf {
 
 RandomForest::RandomForest() : set_(InstanceSet()) {}
@@ -340,9 +342,19 @@ float RandomForest::training_accuracy() const {
 
 float RandomForest::testing_accuracy(const InstanceSet& set) const {
   int correct = 0;
+  int p = -1;
   for (int i = 0; i < set.size(); ++i) {
-    if (predict(set, i) == set.label(i))
-      correct++;
+    // optimize here
+    p = (predict(set, i) == set.label(i));
+    correct = (p ? correct + 1 : correct);
+
+    // // mux optimize - worse
+    // HEXAGON_Pred p = (predict(set, i) == set.label(i));
+    // correct = Q6_R_mux_pRR(p,correct + 1, correct);
+
+
+    // if (predict(set, i) == set.label(i))
+    //   correct++;
   }
   return float(correct) / set.size();
 }
