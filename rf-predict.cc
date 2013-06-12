@@ -52,6 +52,7 @@ int main() {
 
     /********
     1584640 cycles for 462 classifications, 0.69 microsecond for each classification
+    6.5ms for each classification on ndk
     ********/
 
     // ofstream out(outfile.c_str());
