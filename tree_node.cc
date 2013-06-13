@@ -29,7 +29,7 @@ void tree_node::read(FILE *fin) {
   status = NodeStatusType(status_int);
   assert(status != EMPTY);
 
-  printf("from tree_node.cc: status=%d\n", status_int);
+  //printf("from tree_node.cc: status=%d\n", status_int);
 
   if (status_int == 3) {
       //printf("before read in SPLIT\n");

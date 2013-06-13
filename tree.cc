@@ -139,7 +139,7 @@ void Tree::read(FILE *fin) {
   for (int i = 0; i < num_nodes; ++i) {
     int cur_node;
     fscanf(fin, "%d", &cur_node);
-    printf("from tree.cc: cur_node=%d , ", cur_node);
+    //printf("from tree.cc: cur_node=%d , ", cur_node);
     nodes_[cur_node].read(fin);
   }
 }
@@ -464,6 +464,7 @@ int Tree::predict(const InstanceSet& set, int instance_no, int *terminal) const 
   int cur_node = 0;
   int label = 0;
   int p = -1;
+
   while (!result) {
     const tree_node* n = &nodes_[cur_node];
     assert(n->status == TERMINAL || n->status == SPLIT);
@@ -478,11 +479,13 @@ int Tree::predict(const InstanceSet& set, int instance_no, int *terminal) const 
       // // optimize here
       p = (set.get_attribute(instance_no, n->attr) < n->split_point);
       cur_node = (p ? n->left : n->right);
+
       // if (set.get_attribute(instance_no, n->attr) < n->split_point) {
       //   cur_node = n->left;
       // } else {
       //   cur_node = n->right;
       // }
+
     }
   }
   if (terminal != NULL) {

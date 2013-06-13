@@ -1,0 +1,83 @@
+GAS LISTING /tmp/ccNpUryq.s 			page 1
+
+
+   1              		.file	"a.c"
+   2              		.text
+   3              	.Ltext0:
+   4              		.section	.rodata
+   5              	.LC0:
+   6 0000 25642025 		.string	"%d %d"
+   6      6400
+   7              		.text
+   8              		.globl	main
+  10              	main:
+  11              	.LFB0:
+  12              		.file 1 "a.c"
+   1:a.c           **** #include <stdio.h>
+   2:a.c           **** int main() {
+  13              		.loc 1 2 0
+  14              		.cfi_startproc
+  15 0000 55       		pushq	%rbp
+  16              	.LCFI0:
+  17              		.cfi_def_cfa_offset 16
+  18              		.cfi_offset 6, -16
+  19 0001 4889E5   		movq	%rsp, %rbp
+  20              	.LCFI1:
+  21              		.cfi_def_cfa_register 6
+  22 0004 4883EC10 		subq	$16, %rsp
+   3:a.c           **** 	int a, b;
+   4:a.c           **** 	scanf("%d %d", &a, &b);
+  23              		.loc 1 4 0
+  24 0008 B8000000 		movl	$.LC0, %eax
+  24      00
+  25 000d 488D55F8 		leaq	-8(%rbp), %rdx
+  26 0011 488D4DF4 		leaq	-12(%rbp), %rcx
+  27 0015 4889CE   		movq	%rcx, %rsi
+  28 0018 4889C7   		movq	%rax, %rdi
+  29 001b B8000000 		movl	$0, %eax
+  29      00
+  30 0020 E8000000 		call	__isoc99_scanf
+  30      00
+   5:a.c           **** 	int c;
+   6:a.c           **** 
+   7:a.c           **** 	if (a > b) {
+  31              		.loc 1 7 0
+  32 0025 8B55F4   		movl	-12(%rbp), %edx
+  33 0028 8B45F8   		movl	-8(%rbp), %eax
+  34 002b 39C2     		cmpl	%eax, %edx
+  35 002d 7E08     		jle	.L2
+   8:a.c           **** 		c = a;
+  36              		.loc 1 8 0
+  37 002f 8B45F4   		movl	-12(%rbp), %eax
+  38 0032 8945FC   		movl	%eax, -4(%rbp)
+  39 0035 EB06     		jmp	.L4
+  40              	.L2:
+   9:a.c           **** 	}
+  10:a.c           **** 	else {
+  11:a.c           **** 		c = b;
+  41              		.loc 1 11 0
+  42 0037 8B45F8   		movl	-8(%rbp), %eax
+  43 003a 8945FC   		movl	%eax, -4(%rbp)
+GAS LISTING /tmp/ccNpUryq.s 			page 2
+
+
+  44              	.L4:
+  12:a.c           **** 	}
+  13:a.c           **** }
+  45              		.loc 1 13 0
+  46 003d C9       		leave
+  47              	.LCFI2:
+  48              		.cfi_def_cfa 7, 8
+  49 003e C3       		ret
+  50              		.cfi_endproc
+  51              	.LFE0:
+  53              	.Letext0:
+GAS LISTING /tmp/ccNpUryq.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 a.c
+     /tmp/ccNpUryq.s:10     .text:0000000000000000 main
+
+UNDEFINED SYMBOLS
+__isoc99_scanf

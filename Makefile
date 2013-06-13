@@ -3,7 +3,7 @@ HCXX = hexagon-g++
 HSIM = hexagon-sim
 VERSION = 5
 OPT = 2
-CXXFLAGS = -mv$(VERSION) -g -O$(OPT)
+CXXFLAGS = -mv$(VERSION) -O$(OPT)
 CXXLIBS = -lm -lhexagon
 SIMFLAGS = -mv$(VERSION) --timing
 

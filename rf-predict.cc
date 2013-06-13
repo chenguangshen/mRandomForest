@@ -32,9 +32,9 @@ int main() {
 
     bool header = false;
     string delim = ",";
-    string labelfile = "data/vowel.t.label";
-    string datafile = "data/vowel.t.csv";
-    string modelfile = "model/vowel.model";
+    string labelfile = "data/label.t.csv";
+    string datafile = "data/letter.t.csv";
+    string modelfile = "model/letter.model";
     //string outfile = "result.txt";
 
     // int num_features = numfeaturesArg.getValue();
@@ -44,17 +44,28 @@ int main() {
     RandomForest rf;
     rf.read(modelfile.c_str());
 
-    hexagon_sim_init_timer();
-    hexagon_sim_start_timer();
+    // hexagon_sim_init_timer();
+    // hexagon_sim_start_timer();
+    long start = hexagon_sim_read_cycles();
     cout << "\n\n******\nTest accuracy: " << rf.testing_accuracy(*set) << endl;
-    hexagon_sim_end_timer();
-    hexagon_sim_show_timer(stdout);
+    // hexagon_sim_end_timer();
+    // hexagon_sim_show_timer(stdout);
+    long end = hexagon_sim_read_cycles();
+
+    printf("cycle count=%ld\n", end - start);
 
     /********
     1584640 cycles for 462 classifications, 6.86 microsecond for each classification
     use optimization for conditional statement: 1287866 cycles, ~18.7% improvement
     0.006885s for 462 classifications on NDK, 14.90 micros for each classification
+
+    0.006404s for 462 classifications on NDK, with optimization
     ********/
+
+    /**
+    For the letter dataset:
+    7085632 cycles for 1000 classifications, 0.014ms for each classification
+    **/
 
     // ofstream out(outfile.c_str());
     // for (int i = 0; i < set->size(); ++i) {

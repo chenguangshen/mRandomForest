@@ -1,0 +1,65 @@
+GAS LISTING /tmp/ccUMILSN.s 			page 1
+
+
+   1              		.file	"b.c"
+   2              		.text
+   3              	.Ltext0:
+   4              		.section	.rodata
+   5              	.LC0:
+   6 0000 25642025 		.string	"%d %d"
+   6      6400
+   7              		.text
+   8              		.globl	main
+  10              	main:
+  11              	.LFB0:
+  12              		.file 1 "b.c"
+   1:b.c           **** #include <stdio.h>
+   2:b.c           **** int main() {
+  13              		.loc 1 2 0
+  14              		.cfi_startproc
+  15 0000 55       		pushq	%rbp
+  16              	.LCFI0:
+  17              		.cfi_def_cfa_offset 16
+  18              		.cfi_offset 6, -16
+  19 0001 4889E5   		movq	%rsp, %rbp
+  20              	.LCFI1:
+  21              		.cfi_def_cfa_register 6
+  22 0004 4883EC10 		subq	$16, %rsp
+   3:b.c           **** 	int a, b;
+   4:b.c           **** 	scanf("%d %d", &a, &b);
+  23              		.loc 1 4 0
+  24 0008 B8000000 		movl	$.LC0, %eax
+  24      00
+  25 000d 488D55F8 		leaq	-8(%rbp), %rdx
+  26 0011 488D4DF4 		leaq	-12(%rbp), %rcx
+  27 0015 4889CE   		movq	%rcx, %rsi
+  28 0018 4889C7   		movq	%rax, %rdi
+  29 001b B8000000 		movl	$0, %eax
+  29      00
+  30 0020 E8000000 		call	__isoc99_scanf
+  30      00
+   5:b.c           **** 	int c = (a > b ? a : b);
+  31              		.loc 1 5 0
+  32 0025 8B55F8   		movl	-8(%rbp), %edx
+  33 0028 8B45F4   		movl	-12(%rbp), %eax
+  34 002b 39C2     		cmpl	%eax, %edx
+  35 002d 0F4DC2   		cmovge	%edx, %eax
+  36 0030 8945FC   		movl	%eax, -4(%rbp)
+   6:b.c           **** }
+  37              		.loc 1 6 0
+  38 0033 C9       		leave
+  39              	.LCFI2:
+  40              		.cfi_def_cfa 7, 8
+  41 0034 C3       		ret
+  42              		.cfi_endproc
+  43              	.LFE0:
+  45              	.Letext0:
+GAS LISTING /tmp/ccUMILSN.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 b.c
+     /tmp/ccUMILSN.s:10     .text:0000000000000000 main
+
+UNDEFINED SYMBOLS
+__isoc99_scanf
