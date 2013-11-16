@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define NUM_FEATURE 6
 #define NUM_TREE 32
 #define NUM_NODE 600
+#define NUM_FEATURE 16
 
 typedef unsigned int uint32;
 typedef unsigned short uint16;
@@ -39,14 +39,15 @@ static char spacer[10];
 static int status_int;
 static int cur_node;
 static short label_int;
+int i;
 
 tree read_tree(FILE *fin) {
 	tree cur_tree;
 	tree_node cur;
   fscanf(fin, "%s %d\n", spacer, &cur_tree.num_nodes);
-  printf("from read_tree: num_node=%d\n", cur_tree.num_nodes);
+  //printf("from read_tree: num_node=%d\n", cur_tree.num_nodes);
   //memset(cur_tree.nodes, 0, cur_tree.num_nodes * sizeof(tree_node));
-  for (int i = 0; i < cur_tree.num_nodes; ++i) {
+  for (i = 0; i < cur_tree.num_nodes; ++i) {
     fscanf(fin, "%d", &cur_node);
     //printf("from tree.cc: cur_node=%d , ", cur_node);
     fscanf(fin, "%d", &status_int);
@@ -76,17 +77,83 @@ void read_rf(char *filename) {
   FILE *fin = fopen(filename, "r");
 
   fscanf(fin, "%d %d\n", &num_tree, &num_feature);
-  printf("read random forest: num_tree=%d, num_feature=%d\n", num_tree, num_feature);
+  //printf("read random forest: num_tree=%d, num_feature=%d\n", num_tree, num_feature);
 
   for (int i = 0; i < num_tree; ++i) {
     forest[i] = read_tree(fin);
-    printf("%f\n", forest[i].nodes[1].split_point);
+    //printf("%f\n", forest[i].nodes[1].split_point);
   }
   fclose(fin);
 }
 
+static float attributes[NUM_FEATURE];
+static char result = 0;
+static int label = 0, predict_label = 0, true_label = 0;
+static int p = -1;
+static int total_sample;
+static tree_node n;
+int k, j;
+static int neg_vote = 0, pos_vote = 0;
+static int count = 0;
+
+void predict(char *featurefile, char *labelfile) {
+  FILE *ffec = fopen(featurefile, "r");
+  FILE *flabel = fopen(labelfile, "r");
+  fscanf(ffec, "%d\n", &total_sample);
+
+  for (k = 0; k < total_sample; k++) {
+    for (j = 0; j < NUM_FEATURE; j++) {
+      fscanf(ffec, "%f", &attributes[j]);
+    }
+    fscanf(flabel, "%d", &true_label);
+
+    for (i = 0; i < num_tree; i++) {
+      result = 0;
+      cur_node = 0;
+      label = 0;
+      p = -1;
+
+      while (result != 0) {
+        n = forest[i].nodes[cur_node];
+        assert(n.status == TERMINAL || n.status == SPLIT);
+        if (n.status == TERMINAL) {
+          result = 1;
+          label = n.label;
+        } else {
+          if (attributes[n.attr] < n.split_point) {
+            cur_node = n.left;
+          } else {
+            cur_node = n.right;
+          }
+        }
+      }
+      if (label == 1) {
+        pos_vote++;
+      }
+      else {
+        neg_vote++;
+      }
+    }
+    if (pos_vote > neg_vote) {
+      predict_label = 1;
+    }
+    else {
+      predict_label = -1;
+    }
+    if (true_label == predict_label) {
+      count++;
+    }
+  }
+  fclose(ffec);
+  fclose(flabel);
+  printf("%d %d\nAccuracy=%f\n", count, total_sample, ((float)count / (float)total_sample));
+
+}
+
 int main() {
-	printf("hello world\n");
+	printf("Load model...\n");
 	read_rf("model/letter.model");
+  printf("Classification...\n");
+  predict("data/test_attribute", "data/test_label");
 	return 0;
 }

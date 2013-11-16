@@ -1,5 +1,5 @@
 #include "librf.h"
-#include "hexagon_sim_timer.h"
+//#include "hexagon_sim_timer.h"
 
 using namespace std;
 using namespace librf;
@@ -46,13 +46,13 @@ int main() {
 
     // hexagon_sim_init_timer();
     // hexagon_sim_start_timer();
-    long start = hexagon_sim_read_cycles();
+    //long start = hexagon_sim_read_cycles();
     cout << "\n\n******\nTest accuracy: " << rf.testing_accuracy(*set) << endl;
     // hexagon_sim_end_timer();
     // hexagon_sim_show_timer(stdout);
-    long end = hexagon_sim_read_cycles();
+    //long end = hexagon_sim_read_cycles();
 
-    printf("cycle count=%ld\n", end - start);
+   // printf("cycle count=%ld\n", end - start);
 
     /********
     1584640 cycles for 462 classifications, 6.86 microsecond for each classification

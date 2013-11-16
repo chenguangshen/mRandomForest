@@ -17,7 +17,7 @@
 #include <deque>
 #include <set>
 #include <map>
- #include <hexagon_types.h>
+//#include <hexagon_types.h>
 // binary tree implcit in array
 // rows in sorted_inum matrix are arranged in a similar style
 
@@ -133,7 +133,7 @@ void Tree::read(FILE *fin) {
   int num_nodes;
   // in >> spacer >> num_nodes;
   fscanf(fin, "%s %d\n", spacer, &num_nodes);
-  printf("from tree.cc: num_node=%d\n", num_nodes);
+  //printf("from tree.cc: num_node=%d\n", num_nodes);
 
   nodes_.resize( num_nodes);
   for (int i = 0; i < num_nodes; ++i) {
