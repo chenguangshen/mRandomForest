@@ -9,7 +9,7 @@
 #include <fstream>
 #include <algorithm>
 #include <assert.h>
-#include <hexagon_types.h>
+//#include <hexagon_types.h>
 
 namespace librf {
 
