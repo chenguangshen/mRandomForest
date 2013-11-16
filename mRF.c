@@ -115,10 +115,12 @@ void predict(char *featurefile, char *labelfile) {
         n = forest[i].nodes[cur_node];
         assert(n.status == TERMINAL || n.status == SPLIT);
         if (n.status == TERMINAL) {
+          printf("terminal\n");
           result = 1;
           label = n.label;
         } else {
-          if (attributes[n.attr] < n.split_point) {
+	  printf("split: cur_node=%d, n.attr=%d, attr=%f, split=%f\n", cur_node, n.attr, attributes[n.attr], n.split_point);
+          if (attributes[n.attr] < n.split_point) {          
             cur_node = n.left;
           } else {
             cur_node = n.right;
