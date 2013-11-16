@@ -49,10 +49,8 @@ tree read_tree(FILE *fin) {
   for (int i = 0; i < cur_tree.num_nodes; ++i) {
     fscanf(fin, "%d", &cur_node);
     //printf("from tree.cc: cur_node=%d , ", cur_node);
-    //cur_tree.nodes[cur_node].read(fin);
     fscanf(fin, "%d", &status_int);
 
-    //memset(cur, 0, sizeof(tree_node));
     cur.status = (NodeStatusType)status_int;
     assert(cur.status != EMPTY);
 
@@ -75,7 +73,6 @@ tree read_tree(FILE *fin) {
 };
 
 void read_rf(char *filename) {
-  //memset(forest, 0 sizeof(forest));
   FILE *fin = fopen(filename, "r");
 
   fscanf(fin, "%d %d\n", &num_tree, &num_feature);
