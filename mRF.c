@@ -5,7 +5,7 @@
 #include <assert.h>
 
 #define NUM_TREE 32
-#define NUM_NODE 600
+#define NUM_NODE 550
 #define NUM_FEATURE 16
 
 typedef unsigned int uint32;
