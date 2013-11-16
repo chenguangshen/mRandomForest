@@ -18,26 +18,26 @@ typedef struct tree_node_ {
   NodeStatusType status;
   uchar label;
   uint16 attr;
-  uint16 start;
-  uint16 size;
+  //uint16 start;
+  //uint16 size;
   uint16 left;
   uint16 right;
-  float entropy;
+  //float entropy;
   float split_point;
-  uchar depth;
+  //uchar depth;
 } tree_node;
 
 typedef struct tree_ {
-	int num_nodes;
+	short num_nodes;
 	tree_node nodes[NUM_NODE];
 } tree;
 
-static int num_tree = 32;
-static int num_feature = 6;
+static short num_tree = 32;
+static short num_feature = 6;
 static tree forest[NUM_TREE];
 static char spacer[10];
-static int status_int;
-static int cur_node;
+static short status_int;
+static short cur_node;
 static short label_int;
 int i;
 
@@ -79,7 +79,7 @@ void read_rf(char *filename) {
   fscanf(fin, "%d %d\n", &num_tree, &num_feature);
   //printf("read random forest: num_tree=%d, num_feature=%d\n", num_tree, num_feature);
 
-  for (int i = 0; i < num_tree; ++i) {
+  for (i = 0; i < num_tree; ++i) {
     forest[i] = read_tree(fin);
     //printf("%f\n", forest[i].nodes[1].split_point);
   }
@@ -88,13 +88,12 @@ void read_rf(char *filename) {
 
 static float attributes[NUM_FEATURE];
 static char result = 0;
-static int label = 0, predict_label = 0, true_label = 0;
-static int p = -1;
-static int total_sample;
+static short label = 0, predict_label = 0, true_label = 0;
+static short total_sample;
 static tree_node n;
 int k, j;
-static int neg_vote = 0, pos_vote = 0;
-static int count = 0;
+static short neg_vote = 0, pos_vote = 0;
+static short count = 0;
 
 void predict(char *featurefile, char *labelfile) {
   FILE *ffec = fopen(featurefile, "r");
@@ -111,7 +110,6 @@ void predict(char *featurefile, char *labelfile) {
       result = 0;
       cur_node = 0;
       label = 0;
-      p = -1;
 
       while (result != 0) {
         n = forest[i].nodes[cur_node];
