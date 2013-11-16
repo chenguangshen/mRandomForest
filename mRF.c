@@ -74,7 +74,7 @@ void read_rf(char *filename) {
 }
 
 static float attributes[NUM_FEATURE];
-static char result = 0;
+static uchar result = 0;
 static uint16 label = 0, predict_label = 0, true_label = 0;
 static uint16 total_sample;
 static tree_node n;
