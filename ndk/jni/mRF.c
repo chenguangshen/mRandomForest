@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "hexagon_sim_timer.h"
+#include <sys/time.h>
 
 #define NUM_TREE 32
 #define NUM_NODE 550
@@ -162,13 +162,13 @@ void predict(char *featurefile, char *labelfile) {
 
 int main() {
 	printf("Load model...\n");
-	read_rf("model/letter.model");
+	read_rf("rfdata/letter.model");
   printf("Classification...\n");
-  hexagon_sim_init_timer();
-  hexagon_sim_start_timer();
-  predict("data/test_attribute", "data/test_label");
-	hexagon_sim_end_timer();
-  hexagon_sim_show_timer(stdout);
-  //hexagon result:29110928 cycles
+  struct timeval tv, tv1;
+  gettimeofday(&tv, NULL);
+  predict("rfdata/test_attribute", "rfdata/test_label");
+  gettimeofday(&tv1, NULL);
+  double ee = (tv1.tv_sec - tv.tv_sec) + (tv1.tv_usec - tv.tv_usec) / 1000000.0;
+  printf("avg time=%lf\n", ee / 1000.0);
   return 0;
 }

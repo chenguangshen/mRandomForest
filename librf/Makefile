@@ -20,7 +20,7 @@ mRF:
 	gcc -O2 -Os mRF.c -o mRF
 
 mhexagon:
-	hexagon-gcc -O2 -Os -mv5 mRF.c -o mRF -lm -lhexagon
+	hexagon-gcc -O2 -Os -mv5 mRF.c -o mRF
 
 msim:
 	$(HSIM) $(SIMFLAGS) mRF
